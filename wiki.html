@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>The Reduction Wiki</title>
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: 30px;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6;
+            color: #222;
+        }
+
+        /* Fixed Sidebar */
+        nav {
+            position: sticky;
+            top: 20px;
+            align-self: start;
+            border-right: 2px solid #e0e0e0;
+            padding-right: 15px;
+        }
+
+        nav h3 {
+            margin-top: 0;
+            font-size: 1.1rem;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        nav li {
+            margin-bottom: 10px;
+        }
+
+        nav a {
+            color: #0066cc;
+            text-decoration: none;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        /* Main Content Area */
+        main {
+            padding-bottom: 60vh; /* Lets bottom sections scroll to top */
+        }
+
+        section {
+            margin-bottom: 40px;
+        }
+
+        /* Code & Tables */
+        pre {
+            background-color: #f6f8fa;
+            border: 1px solid #e1e4e8;
+            border-radius: 6px;
+            padding: 14px;
+            overflow-x: auto;
+            font-family: "Courier New", Courier, monospace;
+        }
+
+        code {
+            background-color: #f3f4f6;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 0.9em;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px 12px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        blockquote {
+            background: #f9f9f9;
+            border-left: 4px solid #0066cc;
+            margin: 1.5em 10px;
+            padding: 0.5em 10px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 18px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            color: white;
+            margin-right: 10px;
+        }
+
+        .btn-blue { background-color: #0066cc; }
+        .btn-dark { background-color: #222222; }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <h3>Reduction Docs</h3>
+        <ul>
+            <li><a href="#overview">1. Overview</a></li>
+            <li><a href="#downloads">2. Download & Run</a></li>
+            <li><a href="#syntax">3. Language Syntax</a></li>
+            <li><a href="#opcodes">4. Opcode Reference</a></li>
+            <li><a href="#vm">5. C++ VM Engine</a></li>
+            <li><a href="#memory">6. Memory Allocation</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h1>The Reduction Wiki</h1>
+        <hr>
+
+        <section id="overview">
+            <h2>1. Overview</h2>
+            <p>
+                <strong>Reduction</strong> is an imperative-syntax, functional-core programming language designed to translate high-level code directly into simplified slot-based bytecode instructions.
+            </p>
+            <p>
+                It is <em>NOT</em> an esolang (see <a href="https://esolangs.org/wiki/Main_Page" target="_blank">Esoteric Languages Wiki</a>). Rather, it relies on Lambda calculus principles (see <a href="https://en.wikipedia.org/wiki/Lambda_calculus" target="_blank">Wikipedia's Lambda Calculus entry</a>).
+            </p>
+            <blockquote>
+                <strong>Core Architecture:</strong> High-level variable names exist only during compilation. At runtime, execution boils down to a 256-slot register table, dynamic structs, and fast reductions.
+            </blockquote>
+        </section>
+
+        <hr>
+
+        <section id="downloads">
+            <h2>2. Download & Quickstart</h2>
+            <p>
+                Get the official Reduction CLI tool and compiler runtime directly:
+            </p>
+
+            <p style="margin: 20px 0;">
+                <a href="rdX.exe" download="rdX.exe" class="btn btn-blue">Download Windows Executable</a>
+            </p>
+
+            <h3>How to Run a Script</h3>
+            <p>Place <code>rdX.exe</code> in your project directory and run your script from the terminal:</p>
+            <pre><code># 1. Create a file named program.rdX
+input_str name
+let greeting = "Hello "
+print_str greeting
+print_str name
+
+# 2. Run it with rdX
+rdX.exe program.rdX</code></pre>
+        </section>
+
+        <hr>
+
+        <section id="syntax">
+            <h2>3. High-Level Language Syntax</h2>
+            <p>
+                Reduction source files (<code>.rdX</code>) support variables, console I/O, linear math, functions, and explicit deallocation.
+            </p>
+
+            <h3>Variables & Strings</h3>
+            <pre><code>let x = 4
+let greeting = "Hello World"</code></pre>
+
+            <h3>Math Operations</h3>
+            <pre><code>let z = x + y
+let product = x * y</code></pre>
+
+            <h3>Lambdas & Calls</h3>
+            <pre><code>function double(n) = ADD n n
+run double(total) -> result</code></pre>
+
+            <h3>Memory Management</h3>
+            <pre><code>free x</code></pre>
+        </section>
+
+        <hr>
+
+        <section id="opcodes">
+            <h2>4. Bytecode Opcode Reference</h2>
+            <p>
+                The compiler maps variable names to slot indexes (e.g., slot 1, slot 2) and generates these instructions:
+            </p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Instruction</th>
+                        <th>Arguments</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>IN</code> / <code>IN_STR</code></td>
+                        <td><code>[slot]</code></td>
+                        <td>Prompts user input and assigns integer or string to target slot.</td>
+                    </tr>
+                    <tr>
+                        <td><code>OUT</code> / <code>OUT_STR</code></td>
+                        <td><code>[slot]</code></td>
+                        <td>Prints integer or string value stored in the slot to stdout.</td>
+                    </tr>
+                    <tr>
+                        <td><code>SET</code> / <code>STR</code></td>
+                        <td><code>[slot] [val]</code></td>
+                        <td>Stores an immediate integer or string literal in target slot.</td>
+                    </tr>
+                    <tr>
+                        <td><code>ADD</code> / <code>MULT</code></td>
+                        <td><code>[s1] [s2] [dest]</code></td>
+                        <td>Performs math across source slots and outputs to destination slot.</td>
+                    </tr>
+                    <tr>
+                        <td><code>LAMB</code></td>
+                        <td><code>[slot] (param) -> op</code></td>
+                        <td>Registers a lambda signature in target memory slot.</td>
+                    </tr>
+                    <tr>
+                        <td><code>lamb</code></td>
+                        <td><code>[func] [arg] [dest]</code></td>
+                        <td>Executes stored lambda operation using argument slot.</td>
+                    </tr>
+                    <tr>
+                        <td><code>FREE</code></td>
+                        <td><code>[slot]</code></td>
+                        <td>Deallocates pointer memory reserved for the given slot.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <hr>
+
+        <section id="vm">
+            <h2>5. C++ VM Engine</h2>
+            <p>
+                The backend Virtual Machine (<code>RDXVM</code>) manages dynamic types using tagged <code>Register</code> structs across 256 default slots.
+            </p>
+            <pre><code>enum ValueType { INT_VAL, STRING_VAL, LAMBDA_VAL };
+
+struct Register {
+    ValueType type;
+    int intVal = 0;
+    std::string strVal = "";
+    Lambda lambdaVal;
+};</code></pre>
+        </section>
+
+        <hr>
+
+        <section id="memory">
+            <h2>6. Memory Allocation & Cleanup</h2>
+            <p>
+                Reduction avoids garbage collection overhead by relying on deterministic deallocation. When <code>free x</code> is invoked in high-level code, the compiler emits a <code>FREE [slot]</code> instruction which immediately deletes heap pointers in C++:
+            </p>
+            <pre><code>else if (op == "FREE") {
+    int slot; ss >> slot;
+    if (slots[slot]) { delete slots[slot]; slots[slot] = nullptr; }
+}</code></pre>
+        </section>
+
+    </main>
+
+</body>
+</html>
